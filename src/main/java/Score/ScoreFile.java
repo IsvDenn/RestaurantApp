@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ScoreFile {
-    public static int addScore(int x,String[] fileName)
+    public static int addScore(int x,String fileName)
     {   try{
         File restaurantPage= new File(fileName);
         Scanner myRead=new Scanner(restaurantPage);
@@ -22,9 +22,10 @@ public class ScoreFile {
     } catch(FileNotFoundException exception){
         System.out.println("An error has occured");
         exception.printStackTrace();
+        return -1;
     }
     }
-    public static int updateFile(int nr, int score) {
+    public static void updateFile(int nr, int score) {
 
 
     }
