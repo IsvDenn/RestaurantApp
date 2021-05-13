@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <PasswordField fx:id="passreg" layoutX="81.0" layoutY="243.0" prefHeight="26.0" prefWidth="290.0" promptText="password" />
+      <TextField fx:id="userreg" layoutX="81.0" layoutY="200.0" prefHeight="26.0" prefWidth="290.0" promptText="username" />
+      <TextField fx:id="displayname" layoutX="81.0" layoutY="159.0" prefHeight="26.0" prefWidth="290.0" promptText="Display name" />
+      <Label fx:id="registration" layoutX="206.0" layoutY="46.0" prefHeight="26.0" prefWidth="143.0" text="Registration">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="role" layoutX="81.0" layoutY="112.0" prefHeight="26.0" prefWidth="290.0" />
+      <Label fx:id="status" layoutX="405.0" layoutY="117.0" prefHeight="97.0" prefWidth="157.0" />
+   </children>
+</AnchorPane>
