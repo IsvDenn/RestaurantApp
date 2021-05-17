@@ -3,6 +3,7 @@ import.javafx.fxml.FXML;
 import.javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ChoiceBox;
 public class Controller extends Application {
 
     @FXML
@@ -16,6 +17,9 @@ public class Controller extends Application {
 
     @FXML
     private PasswordField password;
+
+    @FXML
+    private ChoicBox UserType;
 
 
 
