@@ -1,19 +1,23 @@
 
 import.javafx.fxml.FXML;
 import.javafx.scene.control.Label;
-public class Controller {
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+public class Controller extends Application {
 
     @FXML
-    private label login;
+    private Label login;
 
     @FXML
-    private label status;
+    private Label status;
 
     @FXML
-    private label username;
+    private TextField username;
 
     @FXML
-    private label password;
+    private PasswordField password;
+
+
 
     public void Verify(ActionEvent event){
         if(username.getText().equals("user") && password.getText().equals("password")){
