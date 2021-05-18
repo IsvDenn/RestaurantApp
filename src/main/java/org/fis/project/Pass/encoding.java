@@ -1,4 +1,14 @@
-package Pass;
+package org.fis.project.Pass;
+
+import org.apache.commons.io.FileUtils;
+import org.fis.project.Exceptions.UsernameAlreadyExistsException;
+import org.fis.project.Models.User;
+import org.json.JSONObject;
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -7,19 +17,20 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
-import java.nio.file.Path
 
 public class encoding {
     private static final String S_key = "Random string";
     private static final String salt = "Another random string";
-     private static List {User} customer;
+     private static List<User> users;
      private static final Path USER_PATH = FileSystemService.getPathToFile("config", "users.json");
     public static String encrypt(String strToEncrypt) {
         try {
@@ -37,8 +48,7 @@ public class encoding {
                     cipher.doFinal(strToEncrypt.getBytes(
                             StandardCharsets.UTF_8)));
         } catch (Exception e) {
-            System.out.println("Error while encrypting: "
-                    + e.toString());
+            System.out.println("Error while encrypting: " + e.toString());
         }
         return null;
     }
@@ -62,24 +72,24 @@ public class encoding {
         return null;
     }
 
-    public static void Save(String myfile, String password, String user) {
-        try {
-            FileWriter myWriter = new FileWriter(myfile, true);
-            myWriter.write(user + " " + password + "\n");
-            myWriter.close();
+    public static void Save(String role, String password, String user) {
+        users.add(new User(user,password,role));
+    }
 
-        } catch (
-                IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+    public static void runSave(String role, String password, String user)throws UsernameAlreadyExistsException {
+        CheckExists(user);
+        String encoded = encrypt(password);
+        Save(role,encoded,user);
+        persistUsers();
+    }
+    public static void CheckExists(String username)throws UsernameAlreadyExistsException
+    {
+        for(User user:users)
+        {
+            if(Objects.equals(username,user.getUsername()))
+            throw new UsernameAlreadyExistsException(username);
         }
     }
-
-    public static void runSave(String myfile, String password, String user) {
-        String encoded = encrypt(password);
-        Save(myfile, encoded, user);
-    }
-
     public static int checkDecrypt(String myfile, String user, String password) {
         try {
             File Obj = new File(myfile);
@@ -102,6 +112,26 @@ public class encoding {
             return -1;
         }
     }
+
+    public static void loadUsersFromFile() throws IOException {
+
+        if (!Files.exists(USER_PATH)) {
+            FileUtils.copyURLToFile(encoding.class.getClassLoader().getResource("users.json"), USER_PATH.toFile());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        users = objectMapper.readValue(USER_PATH.toFile(), new TypeReference<List<User>>() {
+        });
+    }
+
+    private static void persistUsers() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(USER_PATH.toFile(), users);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
 }
 
 
