@@ -4,7 +4,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import.javafx.scene.control.Label;
-public class RegistrationController {
+import javafx.scene.control.Button;
+public class ControllerReg{
 
 
     @FXML
@@ -17,6 +18,8 @@ public class RegistrationController {
     private TextField displayname;
     @FXML
     private ChoiceBox role;
+    @FXML
+    private Button Button;
 
     @FXML
     public void initialize() {
@@ -24,7 +27,7 @@ public class RegistrationController {
     }
 
     @FXML
-    public void handleRegisterAction() {
+    public void ControllerReg{ {
         try {
             UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
             registrationMessage.setText("Account created successfully!");
