@@ -1,6 +1,6 @@
 public class UsernameException extends Exception{
 
-    private string username;
+    private String username;
 
     public class UsernameException() extends exception
     {

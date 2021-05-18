@@ -4,7 +4,7 @@ public class createuser {
 
     private String username;
     private String password;
-    private string user;
+    private String user;
 
 
     public User() {
@@ -13,7 +13,7 @@ public class createuser {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this use = user;
+        this.user = user;
     }
 
     public String GetUsername() {

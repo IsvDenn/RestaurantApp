@@ -22,7 +22,7 @@ public class driver extends Application {
         catch(Exception e) {
             e.printstacktrace();
         }
-        public static void driver(String []; args)
+        public static void driver(String[]; args)
         {
             Launch(args);
         }
