@@ -5,19 +5,22 @@ public class RestaurantPage {
     private int score;
     private int nrofreviews;
     private String description;
+    private int Total;
     //private String[] products=new String[100];
    // private int nrOfProducts=0;
 
     public RestaurantPage() {
     }
 
-    public RestaurantPage(String username, int score, String description,int nrofreviews) {
+    public RestaurantPage(String username, int score, String description,int nrofreviews,int Total) {
         this.username = username;
         this.score=score;
         this.description = description;
         this.nrofreviews=nrofreviews;
+        this.Total=Total;
     }
-
+    public int getTotal() { return Total;}
+    public void SetTotal(int Total) { this.Total=Total;}
     public String getUsername() {
         return username;
     }
