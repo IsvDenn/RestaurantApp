@@ -1,4 +1,4 @@
-package org.fis.project.HomePage;
+package org.fis.project.login;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,8 @@ public class driver extends Application {
         catch(Exception e) {
             e.printstacktrace();
         }
-        public static void driver(String [] args){
-            Launch(args)
+        public static void driver(String []; args)
+        {
+            Launch(args);
         }
 }

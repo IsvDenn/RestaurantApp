@@ -1,3 +1,4 @@
+package org.fis.project.register;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
