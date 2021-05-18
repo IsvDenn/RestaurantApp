@@ -1,6 +1,8 @@
-package Score;
+package org.fis.project.Score;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ScoreFile {
@@ -25,8 +27,15 @@ public class ScoreFile {
         return -1;
     }
     }
-    public static void updateFile(int nr, int score) {
+    public static void updateFile(int nr, int score,String Description,String myfile) {
+        try {
+            FileWriter myWriter = new FileWriter(myfile, false);
+            myWriter.write(nr + " " + score + " "+Description+ "\n");
+            myWriter.close();
 
-
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }

@@ -1,5 +1,4 @@
 package Pass;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -11,14 +10,17 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 import java.util.Scanner;
+import java.nio.file.Path
 
 public class encoding {
     private static final String S_key = "Random string";
     private static final String salt = "Another random string";
-
+     private static List {User} customer;
+     private static final Path USER_PATH = FileSystemService.getPathToFile("config", "users.json");
     public static String encrypt(String strToEncrypt) {
         try {
             byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -50,11 +52,9 @@ public class encoding {
             SecretKey tmp = factory.generateSecret(spec);
             SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey,
-                    ivspec);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
             // Return decrypted string
-            return new String(cipher.doFinal(
-                    Base64.getDecoder().decode(strToDecrypt)));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         } catch (Exception e) {
             System.out.println("Error while decrypting: "
                     + e.toString());

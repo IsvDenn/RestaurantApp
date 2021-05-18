@@ -13,6 +13,16 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0.rc1</version>
+        </dependency>
     </dependencies>
 <build>
     <plugins>
@@ -36,7 +46,7 @@
                 </descriptorRefs>
                 <archive>
                     <manifest>
-                        <mainClass>org.fis.maven.Main</mainClass>
+                        <mainClass>org.fis.project.Main</mainClass>
                     </manifest>
                 </archive>
                 <appendAssemblyId>false</appendAssemblyId>
@@ -58,5 +68,6 @@
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
     </properties>
+
 
 </project>
