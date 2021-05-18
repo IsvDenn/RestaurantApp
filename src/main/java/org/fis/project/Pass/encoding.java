@@ -3,7 +3,7 @@ package org.fis.project.Pass;
 import org.apache.commons.io.FileUtils;
 import org.fis.project.Exceptions.UsernameAlreadyExistsException;
 import org.fis.project.Models.User;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ import java.util.Scanner;
 public class encoding {
     private static final String S_key = "Random string";
     private static final String salt = "Another random string";
-     private static List<User> users;
+     public static List<User> users=new ArrayList<User>();
      private static final Path USER_PATH = FileSystemService.getPathToFile("config", "users.json");
     public static String encrypt(String strToEncrypt) {
         try {
@@ -76,19 +76,26 @@ public class encoding {
         users.add(new User(user,password,role));
     }
 
-    public static void runSave(String role, String password, String user)throws UsernameAlreadyExistsException {
+    public static void runSave(String role, String password, String user)throws UsernameAlreadyExistsException
+    {
         CheckExists(user);
+      //  return -1;
         String encoded = encrypt(password);
         Save(role,encoded,user);
         persistUsers();
+        //return 0;
     }
-    public static void CheckExists(String username)throws UsernameAlreadyExistsException
+    public static void CheckExists(String username) throws UsernameAlreadyExistsException
     {
         for(User user:users)
         {
-            if(Objects.equals(username,user.getUsername()))
-            throw new UsernameAlreadyExistsException(username);
+            if(Objects.equals(username,user.getUsername())) {
+               // return -1;
+                throw new UsernameAlreadyExistsException(username);
+            }
+            //System.out.println("we didn't find any duplicates yet");
         }
+        //return 0;
     }
     public static int checkDecrypt(String myfile, String user, String password) {
         try {

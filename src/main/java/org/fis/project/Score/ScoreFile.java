@@ -1,41 +1,103 @@
 package org.fis.project.Score;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
+import org.fis.project.Exceptions.RestaurantAlreadyExistsException;
+import org.fis.project.Models.RestaurantPage;
+import org.fis.project.Pass.FileSystemService;
+
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class ScoreFile {
-    public static int addScore(int x,String fileName)
-    {   try{
-        File restaurantPage= new File(fileName);
-        Scanner myRead=new Scanner(restaurantPage);
-        int current = 0;
-        int nrOfReviews = 0;
-        int[] read=new int[10];
-        while(myRead.hasNextLine()) {
-            read[current]=myRead.nextInt();
-            current++;
-        }
-        current=read[0];
-        nrOfReviews=read[1];
-        current = (current + x) / (nrOfReviews + 1);
+    public static List<RestaurantPage> users=new ArrayList<RestaurantPage>();
+    private static final Path USER_PATH = FileSystemService.getPathToFile("config", "Restaurants.json");
+    public static int addScore(int x, int current,int nrOfReviews)
+    {
+        current = (current + x) / (nrOfReviews);
         return current;
-    } catch(FileNotFoundException exception){
-        System.out.println("An error has occured");
-        exception.printStackTrace();
+    }
+        public static void Save(String username, int score, String description,int nrofreviews) {
+        users.add(new RestaurantPage(username,  score, description, nrofreviews));
+    }
+    public static int runSaveDescription(String username, int score, String description,int nrofreviews){
+        if(CheckExistsDescription(username,description)!=-1) {
+            persistUsers();
+            return 0;
+        }
+        //String encoded = encrypt(password);
+        //Save(role,encoded,user);
+
         return -1;
     }
-    }
-    public static void updateFile(int nr, int score,String Description,String myfile) {
-        try {
-            FileWriter myWriter = new FileWriter(myfile, false);
-            myWriter.write(nr + " " + score + " "+Description+ "\n");
-            myWriter.close();
-
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        public static int runSaveScore(String username, int score, String description,int nrofreviews){
+            if(CheckExistsScore(username,score,nrofreviews)!=-1) {
+                persistUsers();
+                return 0;
+            }
+            //String encoded = encrypt(password);
+           // Save(role,encoded,user);
+            return -1;
         }
+        public static int CheckExistsDescription(String username,String Description)
+        {
+            for(RestaurantPage user:users)
+            {
+                if(Objects.equals(username,user.getUsername())) {
+                     user.setDescription(Description);
+                     return -1;
+                }
+            }
+            return 0;
+        }
+    public static int CheckExistsScore(String username,int newScore,int NrOfReviews)
+    {
+        for(RestaurantPage user:users)
+        {
+            if(Objects.equals(username,user.getUsername())) {
+                user.setScore(newScore);
+                user.setNrOfReviews(NrOfReviews);
+                return -1;
+            }
+        }
+        return 0;
+    }
+    public static void runSave(String username, int score, String description,int nrofreviews)throws RestaurantAlreadyExistsException
+    {
+        CheckExists(username);
+        //String encoded = encrypt(password);
+        Save( username, score, description, nrofreviews);
+        persistUsers();
+        //return 0;
+    }
+    public static void CheckExists(String username)throws RestaurantAlreadyExistsException
+    {
+        for(RestaurantPage user:users) {
+            if (Objects.equals(username, user.getUsername())) {
+                throw new RestaurantAlreadyExistsException(username);
+            }
+        }
+    }
+    private static void persistUsers() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(USER_PATH.toFile(), users);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+    public static void loadUsersFromFile() throws IOException {
+
+        if (!Files.exists(USER_PATH)) {
+            FileUtils.copyURLToFile(ScoreFile.class.getClassLoader().getResource("Restaurants.json"), USER_PATH.toFile());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        users = objectMapper.readValue(USER_PATH.toFile(), new TypeReference<List<RestaurantPage>>() {
+        });
     }
 }
