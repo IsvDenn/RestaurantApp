@@ -1,0 +1,10 @@
+org\fis\project\Models\RestaurantPage.class
+org\fis\project\Pass\encoding.class
+org\fis\project\Score\ScoreFile$1.class
+org\fis\project\Pass\encoding$1.class
+org\fis\project\Main.class
+org\fis\project\Pass\FileSystemService.class
+org\fis\project\Models\User.class
+org\fis\project\Exceptions\RestaurantAlreadyExistsException.class
+org\fis\project\Score\ScoreFile.class
+org\fis\project\Exceptions\UsernameAlreadyExistsException.class
