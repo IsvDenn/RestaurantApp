@@ -1,12 +1,14 @@
 package org.fis.project.register;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import.javafx.scene.control.Label;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-public class ControllerReg{
+public class ControllerReg {
 
 
     @FXML
@@ -21,6 +23,8 @@ public class ControllerReg{
     private ChoiceBox role;
     @FXML
     private Button Button;
+    @FXML
+    private Label stsmsg;
 
     @FXML
     public void initialize() {
@@ -28,15 +32,13 @@ public class ControllerReg{
     }
 
     @FXML
-    public void ControllerReg{ {
+    public void ControllerReg() {
         try {
             UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
-            registrationMessage.setText("Account created successfully!");
+            status.setText("Account created successfully!");
+        } catch (UsernameAlreadyExistsException e) {
+            sts.msg.setText("Account not created");
         }
-    } catch(UsernameAlreadyExistsException e)
-
-    {
-        registrationMessage.setText("Account not created");
     }
 }
 
