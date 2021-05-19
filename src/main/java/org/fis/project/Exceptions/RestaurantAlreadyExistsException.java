@@ -5,7 +5,7 @@ public class RestaurantAlreadyExistsException extends Exception {
     private String username;
 
     public RestaurantAlreadyExistsException(String username) {
-        super(String.format("An arestaurant with the username %s already exists!", username));
+        super(String.format("A restaurant with the username %s already exists!", username));
         this.username = username;
     }
 
