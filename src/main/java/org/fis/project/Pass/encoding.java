@@ -1,13 +1,10 @@
 package org.fis.project.Pass;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.fis.project.Exceptions.UsernameAlreadyExistsException;
 import org.fis.project.Models.User;
-//import org.json.JSONObject;
-import java.util.ArrayList;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -15,17 +12,15 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class encoding {
     private static final String S_key = "Random string";
@@ -97,27 +92,16 @@ public class encoding {
         }
         //return 0;
     }
-    public static int checkDecrypt(String myfile, String user, String password) {
-        try {
-            File Obj = new File(myfile);
-            Scanner Reader = new Scanner(Obj);
-            String[] input = new String[2];
-                while (Reader.hasNextLine()){
-                    input = Reader.nextLine().split(" ");
-                if (input[0] == user) {
-                    if(password==decrypt(input[1]))
-                        return 1;
-                    else return 0;
-                }
-                }
-                Reader.close();
-            return 0;
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+    public static int Login(String username, String password)
+    {
+        for(User user:users)
+            if(Objects.equals(username,user.getUsername()) && Objects.equals(password,decrypt(user.getPassword()))) {
+                if (user.getRole() == "Customer")
+                    return 1;
+                if (user.getRole() == "Restaurant")
+                    return 2;
+            }
             return -1;
-        }
     }
 
     public static void loadUsersFromFile() throws IOException {

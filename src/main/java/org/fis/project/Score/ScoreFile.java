@@ -17,13 +17,13 @@ import java.util.Objects;
 public class ScoreFile {
     public static List<RestaurantPage> users=new ArrayList<RestaurantPage>();
     private static final Path USER_PATH = FileSystemService.getPathToFile("config", "Restaurants.json");
-    public static int addScore(int x, int current,int nrOfReviews)
+    public static int addScore(int x, int total,int nrOfReviews)
     {
-        current = (current + x) / (nrOfReviews);
+        int current = (total + x) / (nrOfReviews);
         return current;
     }
-        public static void Save(String username, int score, String description,int nrofreviews) {
-        users.add(new RestaurantPage(username,  score, description, nrofreviews));
+        public static void Save(String username, int score, String description,int nrofreviews, int Total) {
+        users.add(new RestaurantPage(username,  score, description, nrofreviews,Total));
     }
     public static int runSaveDescription(String username, int score, String description,int nrofreviews){
         if(CheckExistsDescription(username,description)!=-1) {
@@ -35,7 +35,7 @@ public class ScoreFile {
 
         return -1;
     }
-        public static int runSaveScore(String username, int score, String description,int nrofreviews){
+        public static int runSaveScore(String username, int score,int nrofreviews){
             if(CheckExistsScore(username,score,nrofreviews)!=-1) {
                 persistUsers();
                 return 0;
@@ -67,11 +67,11 @@ public class ScoreFile {
         }
         return 0;
     }
-    public static void runSave(String username, int score, String description,int nrofreviews)throws RestaurantAlreadyExistsException
+    public static void runSave(String username, int score, String description,int nrOfReviews,int Total)throws RestaurantAlreadyExistsException
     {
         CheckExists(username);
         //String encoded = encrypt(password);
-        Save( username, score, description, nrofreviews);
+        Save( username, score, description, nrOfReviews, Total);
         persistUsers();
         //return 0;
     }
