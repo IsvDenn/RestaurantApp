@@ -5,7 +5,7 @@ public class RestaurantPage {
     private int score;
     private int nrofreviews;
     private String description;
-    private int Total;
+    private int total;
     //private String[] products=new String[100];
    // private int nrOfProducts=0;
 
@@ -17,10 +17,10 @@ public class RestaurantPage {
         this.score=score;
         this.description = description;
         this.nrofreviews=nrofreviews;
-        this.Total=Total;
+        this.total=total;
     }
-    public int getTotal() { return Total;}
-    public void SetTotal(int Total) { this.Total=Total;}
+    public int getTotal() { return total;}
+    public void SetTotal(int Total) { this.total=Total;}
     public String getUsername() {
         return username;
     }

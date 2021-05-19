@@ -93,14 +93,19 @@ public class encoding {
         //return 0;
     }
     public static int Login(String username, String password)
-    {
+    { String decrypted;
         for(User user:users)
-            if(Objects.equals(username,user.getUsername()) && Objects.equals(password,decrypt(user.getPassword()))) {
-                if (user.getRole() == "Customer")
+        { decrypted=decrypt(user.getPassword());
+       // System.out.println("Password is:"+decrypted);
+        //System.out.println("Username is:"+user.getUsername());
+        //System.out.println("Tried1"+username);
+            //    System.out.println("tried2"+password);
+            if((Objects.equals(username,user.getUsername())) && (Objects.equals(password,decrypted))) {
+                if (Objects.equals(user.getRole(),"Customer"))
                     return 1;
-                if (user.getRole() == "Restaurant")
+                if (Objects.equals(user.getRole(), "Restaurant"))
                     return 2;
-            }
+            }}
             return -1;
     }
 
